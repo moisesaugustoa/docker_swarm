@@ -3,22 +3,23 @@ pipeline {
     agent any
 
     stages {
-        stage('terraform init') {
-            steps {
-                sh 'echo terraform init'
+      stage('Build in Docker') {
+        agent {
+            docker {
+                image hashicorp/terraform
+                reuseNode true
             }
+        }
+        steps {
+                sh 'echo terraform init'
+        }
+        steps {
+                sh 'echo terraform plan'
+        }
+        steps {
+                sh 'echo terraform apply'
         }
 
-        stage('terraform plan') {
-            steps {
-                sh 'echo terraform init'
-            }
-        }
-        stage('terraform apply') {
-            steps {
-                sh 'echo terraform apply'
-            }
         }
     }
-
 }
