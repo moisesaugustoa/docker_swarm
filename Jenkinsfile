@@ -1,25 +1,15 @@
 pipeline {
-
-    agent any
-
+    agent {
+        docker { image 'hashicorp/terraform' }
+    }
     stages {
-      stage('Build in Docker') {
-        agent {
-            docker {
-                image hashicorp/terraform
-                reuseNode true
-            }
-        }
-        steps {
+        stage('Test') {
+            steps {
+                sh 'terraform --version'
                 sh 'echo terraform init'
-        }
-        steps {
                 sh 'echo terraform plan'
-        }
-        steps {
                 sh 'echo terraform apply'
-        }
-
+            }
         }
     }
 }
