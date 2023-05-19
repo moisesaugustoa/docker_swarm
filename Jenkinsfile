@@ -1,28 +1,24 @@
 pipeline {
     agent any
-    
     stages {
-        stage('Checkout') {
+        stage('version') {
             steps {
-                git 'https://github.com/moisesaugustoa/docker_swarm.git'
+                sh 'terraform --version'
             }
         }
-        
-        stage('Terraform Init') {
+        stage('init') {
             steps {
-                sh 'terraform init'
+                sh 'echo terraform init'
             }
         }
-        
-        stage('Terraform Plan') {
+        stage('plan') {
             steps {
-                sh 'terraform plan -out=tfplan'
+                sh 'echo terraform plan'
             }
         }
-        
-        stage('Terraform Apply') {
+        stage('apply') {
             steps {
-                sh 'terraform apply -auto-approve tfplan'
+                sh 'echo terraform apply'
             }
         }
     }
