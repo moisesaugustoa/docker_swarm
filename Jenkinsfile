@@ -1,24 +1,14 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'hashicorp/terraform:latest'
+            args  '--entrypoint="" -u root -v /opt/jenkins/.aws:/root/.aws'
+        }
+    }
     stages {
-        stage('version') {
+        stage('Test') {
             steps {
                 sh 'terraform --version'
-            }
-        }
-        stage('init') {
-            steps {
-                sh 'echo terraform init'
-            }
-        }
-        stage('plan') {
-            steps {
-                sh 'echo terraform plan'
-            }
-        }
-        stage('apply') {
-            steps {
-                sh 'echo terraform apply'
             }
         }
     }
